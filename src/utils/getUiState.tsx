@@ -26,29 +26,22 @@ export const useUiRedux = () => {
     ProfilePopOverIsOpen,
   };
 };
-export function getWindowDimensions() {
-  const { innerWidth: width, innerHeight: height } = window;
-  return {
-    width,
-    height,
-  };
-}
-
-export default function useWindowDimensions() {
-  const [windowDimensions, setWindowDimensions] = useState(
-    getWindowDimensions()
-  );
-
+export function useGetWindowDimensions() {
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   useEffect(() => {
-    function handleResize() {
-      setWindowDimensions(getWindowDimensions());
-    }
+    const handleWindowSizeChange = () => {
+      setScreenWidth(window.innerWidth);
+    };
 
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    window.addEventListener("resize", handleWindowSizeChange);
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("resize", handleWindowSizeChange);
+    };
   }, []);
 
-  return windowDimensions;
+  return { screenWidth };
 }
 
 // function useOutsideAlerter(ref: RefObject<HTMLElement>) {

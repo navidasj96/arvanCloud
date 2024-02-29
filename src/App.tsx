@@ -7,22 +7,11 @@ import { DrawerDefault } from "./components/HalfScreenHamburger";
 import { FullScreenHamburger } from "./components/FullScreenHamburger";
 import { useDispatch } from "react-redux";
 import { HamburgerMenuClose } from "./UistateManagment/UiSlice";
+import { useGetWindowDimensions } from "./utils/getUiState";
 
 function App() {
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const dispatch = useDispatch();
-  useEffect(() => {
-    const handleWindowSizeChange = () => {
-      setScreenWidth(window.innerWidth);
-    };
-
-    window.addEventListener("resize", handleWindowSizeChange);
-
-    // Clean up the event listener when the component unmounts
-    return () => {
-      window.removeEventListener("resize", handleWindowSizeChange);
-    };
-  }, []);
+  const { screenWidth } = useGetWindowDimensions();
   useEffect(() => {
     if (screenWidth > 800) {
       dispatch(HamburgerMenuClose());

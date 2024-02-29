@@ -1,7 +1,10 @@
 import React from "react";
 import IconComponent from "./IconComponent";
 import { useDispatch } from "react-redux";
-import { setActiveSession } from "../UistateManagment/UiSlice";
+import {
+  HamburgerMenuClose,
+  setActiveSession,
+} from "../UistateManagment/UiSlice";
 import { useUiRedux } from "../utils/getUiState";
 const MainMenuoptions: {
   title: string;
@@ -60,16 +63,83 @@ const MainMenuoptions: {
     route: "dbaas",
   },
 ];
+const MainMenuoptionsInHam: {
+  title: string;
+  title_fa: string;
+  Icon: any;
+  abbrev: string;
+  route: string;
+}[] = [
+  {
+    title: "Close",
+    title_fa: "Close",
+    Icon: "Close",
+    abbrev: "Close",
+    route: "/",
+  },
+  {
+    title: "Home",
+    title_fa: "صفحه اصلی",
+    Icon: "Home",
+    abbrev: "Home",
+    route: "/",
+  },
+  {
+    title: "CDN",
+    title_fa: "شبکه توزیع محتوا",
+    Icon: "CDN",
+    abbrev: "CDN",
+    route: "/cdn/domains",
+  },
+  {
+    title: "Cloud Server",
+    title_fa: " سرور ابری",
+    Icon: "Cloud_Server",
+    abbrev: "Server",
+    route: "/ecc",
+  },
+  {
+    title: "Objective Storage",
+    title_fa: " فضای ابری",
+    Icon: "Objective_Storage",
+    abbrev: "Storage",
+    route: "storage",
+  },
+  {
+    title: "Cloud Container",
+    title_fa: "کانتینر ابری",
+    Icon: "Cloud_Container",
+    abbrev: "Container",
+    route: "paas",
+  },
+  {
+    title: "Video Platform ",
+    title_fa: "بلتفرم ویدیو",
+    Icon: "Video_Platform",
+    abbrev: "Video",
+    route: "video",
+  },
+  {
+    title: "Managed Database",
+    title_fa: "دیتابیس ابری",
+    Icon: "Managed_Database",
+    abbrev: "Database",
+    route: "dbaas",
+  },
+];
 export default function SidebarOptions() {
-  const { ActiveSession } = useUiRedux();
-
+  const { ActiveSession, HamburgerMenuIsOpen } = useUiRedux();
+  const options = HamburgerMenuIsOpen ? MainMenuoptionsInHam : MainMenuoptions;
   const dispatch = useDispatch();
   const OnclickHandler = (title: string) => {
+    if (title === "Close") {
+      dispatch(HamburgerMenuClose());
+    }
     dispatch(setActiveSession(title));
   };
   return (
     <div className="flex flex-col w-full ">
-      {MainMenuoptions.map((item) => {
+      {options.map((item) => {
         return (
           <div
             onClick={() => OnclickHandler(item.title)}

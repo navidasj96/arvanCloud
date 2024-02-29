@@ -1,12 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import SidebarOptions from "./components/Sidebar";
 import SettingOptions from "./components/SettingOptions";
 import Header from "./components/Header";
 import { DrawerDefault } from "./components/HalfScreenHamburger";
 import { FullScreenHamburger } from "./components/FullScreenHamburger";
+import { useDispatch } from "react-redux";
+import { HamburgerMenuClose } from "./UistateManagment/UiSlice";
 
 function App() {
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const handleWindowSizeChange = () => {
+      setScreenWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleWindowSizeChange);
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("resize", handleWindowSizeChange);
+    };
+  }, []);
+  useEffect(() => {
+    if (screenWidth > 800) {
+      dispatch(HamburgerMenuClose());
+    }
+  }, [screenWidth, dispatch]);
   return (
     <div className="flex min-h-screen w-screen bg-[#f5f7fa] rtl fontIR">
       <div className="flex w-auto z-10 fixed top-0 h-[100dvh] translate-x-full lg:relative lg:translate-x-0 transition-all duration-300">

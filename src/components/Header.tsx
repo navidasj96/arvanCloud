@@ -1,7 +1,10 @@
 import React from "react";
 import IconComponent from "./IconComponent";
 import { useDispatch } from "react-redux";
-import { HamburgerMenuOpen } from "../UistateManagment/UiSlice";
+import {
+  HamburgerMenuOpen,
+  setProfileModalOpen,
+} from "../UistateManagment/UiSlice";
 
 const leftOptionsSmall: {
   title: string;
@@ -104,8 +107,14 @@ export default function Header() {
   const RightSmallHandler = (title: string) => {
     dispatch(HamburgerMenuOpen());
   };
+
+  const LeftOptionClickHandler = (title: string) => {
+    if (title === "Profile") {
+      dispatch(setProfileModalOpen());
+    }
+  };
   return (
-    <div className="sticky top-0 z-1">
+    <div className="sticky top-0 z-[1] box-border">
       <div className="flex items-center justify-between gap-[1rem] py-[0.5rem] px-[0.5rem] bg-[#fff] border min-h-[52px]">
         <div className="flex flex-row-reverse items-center gap-[0.5rem] lg:hidden">
           {rightOptionsSmall.map((item) => {
@@ -124,7 +133,10 @@ export default function Header() {
         <div className="flex flex-row-reverse items-center gap-[0.5rem] lg:hidden">
           {leftOptionsSmall.map((item) => {
             return (
-              <div className="h-[36px] w-[36px] inline-flex items-center justify-center  hover:bg-gray-300 rounded-lg">
+              <div
+                onClick={() => LeftOptionClickHandler(item.title)}
+                className="h-[36px] w-[36px] inline-flex items-center justify-center  hover:bg-gray-300 rounded-lg"
+              >
                 <span className="text-[20px] text-[#4C4C4C]">
                   <IconComponent iconName={item.Icon} />
                 </span>
@@ -132,7 +144,7 @@ export default function Header() {
             );
           })}
         </div>
-        {/* big items grom here -------------------------------------- */}
+        {/* big items from here -------------------------------------- */}
 
         <div className=" flex-row-reverse items-center gap-[0.5rem] hidden lg:flex lg:mr-auto">
           {LeftOptionsBig.map((item) => {

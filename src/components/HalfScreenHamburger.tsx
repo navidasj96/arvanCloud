@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Drawer,
-  Button,
-  Typography,
-  IconButton,
-  ThemeProvider,
-} from "@material-tailwind/react";
+import { Drawer, ThemeProvider } from "@material-tailwind/react";
 import { useDispatch } from "react-redux";
 import { useUiRedux } from "../utils/getUiState";
 import {
@@ -24,12 +18,12 @@ export function DrawerDefault() {
   const theme = {
     drawer: {
       defaultProps: {
-        size: 300,
+        size: 500,
         overlay: true,
         placement: "left",
         overlayProps: undefined,
         className: "",
-        dismiss: undefined,
+
         onClose: undefined,
         transition: {
           type: "tween",
@@ -42,6 +36,7 @@ export function DrawerDefault() {
             position: "fixed",
             zIndex: "z-[9999]",
             pointerEvents: "pointer-events-auto",
+
             backgroundColor: "bg-white",
             boxSizing: "box-border",
             width: "w-full",
@@ -63,7 +58,7 @@ export function DrawerDefault() {
     },
   };
   return (
-    <div className=" flex md:hidden">
+    <div className=" flex lg:hidden">
       <ThemeProvider value={theme}>
         <Drawer
           open={HamburgerMenuIsOpen ? true : false}
@@ -83,8 +78,8 @@ export function DrawerDefault() {
             </div>
             {/* sidebar not home */}
             {/* options of sidebarmenus(not home) */}
-            <div className="flex flex-col overflow-y-auto overflow-x-hidden whitespace-nowrap w-[216px] bg-[#fff] z-10 border">
-              <div className="flex items-center h-[72px] flex-shrink-0 gap-[0.5rem] py-[0rem] px-[.5rem] text-[#333] border"></div>
+            <div className="flex flex-col overflow-y-auto overflow-x-hidden whitespace-nowrap w-[216px] bg-[#fff] z-10 ">
+              <div className="flex items-center h-[72px] flex-shrink-0 gap-[0.5rem] py-[0rem] px-[.5rem] text-[#333] "></div>
               <div className="flex flex-col gap-[.25rem] m-0 "></div>
             </div>
           </div>

@@ -26,8 +26,39 @@ export const useUiRedux = () => {
     ProfilePopOverIsOpen,
   };
 };
-export function useGetWindowDimensions() {
+
+export function UseGetWindowsWidth() {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleWindowSizeChange = () => {
+      setScreenWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleWindowSizeChange);
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("resize", handleWindowSizeChange);
+    };
+  }, []);
+  return {
+    screenWidth,
+  };
+}
+export function getWindowDimensions() {
+  const { innerWidth: width, innerHeight: height } = window;
+  return {
+    width,
+    height,
+  };
+}
+
+export default function useWindowDimensions() {
+  const [windowDimensions, setWindowDimensions] = useState(
+    getWindowDimensions()
+  );
+
   useEffect(() => {
     const handleWindowSizeChange = () => {
       setScreenWidth(window.innerWidth);

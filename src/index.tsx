@@ -5,15 +5,39 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import store from "./UistateManagment/store";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { queries } from "@testing-library/react";
+const router = createBrowserRouter([
+  {
+    path: "/options",
+    element: <div>options</div>,
+  },
+  {
+    path: "/",
+    element: <App />,
+  },
+]);
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {},
+
+    mutations: {},
+  },
+});
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
+      <ReactQueryDevtools />
+    </QueryClientProvider>
   </React.StrictMode>
 );
 

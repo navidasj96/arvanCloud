@@ -7,7 +7,7 @@ import {
   ThemeProvider,
 } from "@material-tailwind/react";
 import { useDispatch } from "react-redux";
-import { useGetWindowDimensions, useUiRedux } from "../utils/getUiState";
+import { useUiRedux } from "../utils/getUiState";
 import {
   HamburgerMenuClose,
   HamburgerMenuOpen,
@@ -18,14 +18,13 @@ import SettingOptions from "./SettingOptions";
 export function FullScreenHamburger() {
   const dispatch = useDispatch();
   const { HamburgerMenuIsOpen } = useUiRedux();
-  const { screenWidth } = useGetWindowDimensions();
 
   const openDrawer = () => dispatch(HamburgerMenuOpen());
   const closeDrawer = () => dispatch(HamburgerMenuClose());
   const theme = {
     drawer: {
       defaultProps: {
-        size: screenWidth,
+        size: 300,
         overlay: true,
         placement: "left",
         overlayProps: undefined,

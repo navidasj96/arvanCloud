@@ -6,6 +6,7 @@ export interface UiState {
   ProfileModalIsOpen: boolean;
   NotificationModalIsOpen: boolean;
   ProfilePopOver: boolean;
+  MiniSearchModalIsOpen: boolean;
 }
 
 const initialState: UiState = {
@@ -14,6 +15,7 @@ const initialState: UiState = {
   ProfileModalIsOpen: false,
   NotificationModalIsOpen: false,
   ProfilePopOver: false,
+  MiniSearchModalIsOpen: false,
 };
 
 const UiSlice = createSlice({
@@ -56,6 +58,12 @@ const UiSlice = createSlice({
     setProfilePopOverToggle: (state) => {
       state.ProfilePopOver = !state.ProfilePopOver;
     },
+    setMiniSearchModalOpen: (state) => {
+      state.MiniSearchModalIsOpen = true;
+    },
+    setMiniSearchModalClose: (state) => {
+      state.MiniSearchModalIsOpen = false;
+    },
   },
 });
 
@@ -72,5 +80,7 @@ export const {
   setProfilePopOverOpen,
   setProfilePopOverClose,
   setProfilePopOverToggle,
+  setMiniSearchModalOpen,
+  setMiniSearchModalClose,
 } = UiSlice.actions;
 export default UiSlice.reducer;

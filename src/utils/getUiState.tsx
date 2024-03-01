@@ -18,12 +18,16 @@ export const useUiRedux = () => {
   const ProfilePopOverIsOpen = useSelector<RootState, string | boolean>(
     (state) => state.uiRedux.ProfilePopOver
   );
+  const MiniSearchModalIsOpen = useSelector<RootState, string | boolean>(
+    (state) => state.uiRedux.MiniSearchModalIsOpen
+  );
   return {
     ActiveSession,
     HamburgerMenuIsOpen,
     ProfileModalIsOpen,
     NotificationModalIsOpen,
     ProfilePopOverIsOpen,
+    MiniSearchModalIsOpen,
   };
 };
 
@@ -55,9 +59,7 @@ export function getWindowDimensions() {
 }
 
 export default function useWindowDimensions() {
-  const [windowDimensions, setWindowDimensions] = useState(
-    getWindowDimensions()
-  );
+  const [screenWidth, setScreenWidth] = useState<number>();
 
   useEffect(() => {
     const handleWindowSizeChange = () => {

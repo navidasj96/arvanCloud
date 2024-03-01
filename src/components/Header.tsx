@@ -3,6 +3,8 @@ import IconComponent from "./IconComponent";
 import { useDispatch } from "react-redux";
 import {
   HamburgerMenuOpen,
+  setMiniSearchModalOpen,
+  setNotificationModalOpen,
   setProfileModalOpen,
 } from "../UistateManagment/UiSlice";
 
@@ -105,14 +107,20 @@ const LeftOptionsBig: {
 export default function Header() {
   const dispatch = useDispatch();
   const RightSmallHandler = (title: string) => {
-    dispatch(HamburgerMenuOpen());
+    if (title === "Menu") dispatch(HamburgerMenuOpen());
+    if (title === "Search") dispatch(setMiniSearchModalOpen());
   };
 
   const LeftOptionClickHandler = (title: string) => {
     if (title === "Profile") {
       dispatch(setProfileModalOpen());
     }
+    if (title === "Notification") {
+      dispatch(setNotificationModalOpen());
+    }
   };
+
+  const LeftBigOptionsClickHandler = (title: string) => {};
   return (
     <div className="sticky top-0 z-[1] box-border">
       <div className="flex items-center justify-between gap-[1rem] py-[0.5rem] px-[0.5rem] bg-[#fff] border min-h-[52px]">
@@ -150,11 +158,34 @@ export default function Header() {
           {LeftOptionsBig.map((item) => {
             return (
               <div
-                className={`h-[36px] w-[36px] justify-center  inline-flex items-center   hover:bg-gray-300 rounded-lg`}
+                onClick={() => LeftBigOptionsClickHandler(item.title)}
+                className={` ${
+                  item.title !== "Profile" &&
+                  item.title !== "Wallet" &&
+                  " h-[36px] w-[36px]"
+                } ${
+                  item.title === "Profile" && "w-[176px] border   h-[36px]"
+                }  ${
+                  item.title === "Wallet" && "w-[176px] border  h-[36px] "
+                } justify-center  inline-flex items-center   hover:bg-gray-300 rounded-lg cursor-pointer`}
               >
-                <span className="text-[20px] text-[#4C4C4C]">
+                <span
+                  className={` text-[20px] text-[#4C4C4C] ${
+                    item.title === "Wallet" && "ml-auto mr-5 "
+                  }`}
+                >
                   <IconComponent iconName={item.Icon} />
                 </span>
+                {item.title === "Profile" && (
+                  <div className="text-[10px] font-[300] tracking-[-.2px] whitespace-nowrap text-ellipsis overflow-hidden max-w-[100%] text-[#333] mr-2">
+                    نام و نام خانوادگی
+                  </div>
+                )}
+                {item.title === "Wallet" && (
+                  <div className="text-[10px] font-[300] tracking-[-.2px] whitespace-nowrap text-ellipsis overflow-hidden max-w-[100%] text-[#333] ml-5">
+                    ۰ ریال
+                  </div>
+                )}
               </div>
             );
           })}

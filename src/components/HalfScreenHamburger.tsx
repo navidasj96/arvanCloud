@@ -1,25 +1,101 @@
 import React from "react";
 import { Drawer, ThemeProvider } from "@material-tailwind/react";
 import { useDispatch } from "react-redux";
-import { useGetWindowDimensions, useUiRedux } from "../utils/getUiState";
+import { useUiRedux } from "../utils/getUiState";
 import {
   HamburgerMenuClose,
   HamburgerMenuOpen,
 } from "../UistateManagment/UiSlice";
 import SidebarOptions from "./Sidebar";
 import SettingOptions from "./SettingOptions";
+import MenuItems from "./MenuItems";
+import Menu from "./MenuItems";
+
+const Serveroptions = [
+  { main: { title: "ابرک‌ها" }, subMenu: [{ title: "لیست ابرک‌ها" }] },
+  {
+    main: { title: "شبکه" },
+    subMenu: [
+      { title: "IP اینترنتی" },
+      { title: "شبکه خصوصی" },
+      { title: "IP شناور" },
+    ],
+  },
+  {
+    main: { title: "امنیت" },
+    subMenu: [{ title: "فایروال" }, { title: "کلید  SSH" }],
+  },
+  {
+    main: { title: "مدیریت دیسک" },
+    subMenu: [
+      { title: "دیسک" },
+      { title: "اسنب شات" },
+      { title: "بکاب" },
+      { title: "سیستم‌عامل شخصی" },
+    ],
+  },
+  {
+    main: { title: "راه‌کارهای سازمانی" },
+    subMenu: [{ title: "لیست ابرک‌عا" }, { title: "انتقال رنج IP" }],
+  },
+];
+const optionsCDN = [
+  { main: { title: "دامنه‌های من" } },
+  {
+    main: { title: "لیست‌ها" },
+  },
+  {
+    main: { title: "لاگ تغییرات بنل" },
+  },
+  {
+    main: { title: "تنظیمات" },
+    subMenu: [{ title: "انتقال دامنه" }],
+  },
+];
+const optionsObjectiveStorage = [
+  { main: { title: "بیشخان" } },
+  {
+    main: { title: "انتخاب بسته" },
+  },
+  {
+    main: { title: "مدیریت دسترسی" },
+  },
+  {
+    main: { title: "صندوقچه‌ها" },
+  },
+  {
+    main: { title: "بانک پالیسی" },
+    subMenu: [{ title: "مدیریت پالیسی" }, { title: "مدیریت کاربران" }],
+  },
+  {
+    main: { title: "نقطه دسترسی" },
+  },
+  {
+    main: { title: "صندوقچه دانلود" },
+  },
+  {
+    main: { title: "استاتیک وب‌سایت" },
+  },
+  {
+    main: { title: "ابزار و راهنما" },
+  },
+];
 
 export function DrawerDefault() {
   const dispatch = useDispatch();
   const { HamburgerMenuIsOpen } = useUiRedux();
-  const { screenWidth } = useGetWindowDimensions();
 
   const openDrawer = () => dispatch(HamburgerMenuOpen());
   const closeDrawer = () => dispatch(HamburgerMenuClose());
+  const { ActiveSession } = useUiRedux();
+  let options = optionsCDN;
+  if (ActiveSession === "CDN") options = optionsCDN;
+  if (ActiveSession === "Cloud Server") options = Serveroptions;
+  if (ActiveSession === "Objective Storage") options = optionsObjectiveStorage;
   const theme = {
     drawer: {
       defaultProps: {
-        size: 500,
+        size: 300,
         overlay: true,
         placement: "left",
         overlayProps: undefined,
@@ -64,12 +140,12 @@ export function DrawerDefault() {
         <Drawer
           open={HamburgerMenuIsOpen ? true : false}
           onClose={closeDrawer}
-          className="p-4"
+          className=""
           placement="right"
           placeholder={undefined}
         >
-          <div className="flex flex-row lg:translate-x-full">
-            <div className="flex flex-col items-center gap-[1.5rem] overflow-hidden pt-[1rem] pr-[0.5rem] pb-[0.5rem] z-10 transform bg-[#fff] whitespace-nowrap flex-shrink-0  ">
+          <div className="flex flex-row h-full lg:translate-x-full">
+            <div className="flex flex-col  items-center gap-[1.5rem] overflow-hidden z-10 transform bg-[#fff] whitespace-nowrap flex-shrink-0 border-l ">
               <div className="flex flex-col w-[100%] gap-[.5rem] ">
                 <SidebarOptions />
               </div>
@@ -81,7 +157,9 @@ export function DrawerDefault() {
             {/* options of sidebarmenus(not home) */}
             <div className="flex flex-col overflow-y-auto overflow-x-hidden whitespace-nowrap w-[216px] bg-[#fff] z-10 ">
               <div className="flex items-center h-[72px] flex-shrink-0 gap-[0.5rem] py-[0rem] px-[.5rem] text-[#333] "></div>
-              <div className="flex flex-col gap-[.25rem] m-0 "></div>
+              <div className="flex flex-col gap-[.25rem] m-0 ">
+                {ActiveSession !== "Home" && <Menu options={options} />}
+              </div>
             </div>
           </div>
         </Drawer>

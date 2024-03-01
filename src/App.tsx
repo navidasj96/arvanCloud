@@ -1,55 +1,55 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
-import SidebarOptions from "./components/Sidebar";
-import SettingOptions from "./components/SettingOptions";
 import Header from "./components/Header";
 
 import { useDispatch } from "react-redux";
-import { HamburgerMenuClose } from "./UistateManagment/UiSlice";
-import { UseGetWindowsWidth, useUiRedux } from "./utils/getUiState";
-import MiniSideBar from "./components/MiniSideBar";
+import {
+  HamburgerMenuClose,
+  setMiniSearchModalClose,
+  setNotificationModalClose,
+  setProfileModalClose,
+} from "./UistateManagment/UiSlice";
+import { UseGetWindowsWidth } from "./utils/getUiState";
 import ProfileModal from "./modals.tsx/ProfileModal";
 import HomeSidebar from "./components/HomeSidebar";
 import DropDown from "./components/DropDown";
-import { useGetWindowDimensions } from "./utils/getUiState";
+import { DrawerDefault } from "./components/HalfScreenHamburger";
+import MiniNotification from "./components/MiniNotification";
+import { MiniSearchBar } from "./components/MiniSearchbar";
+import SideBarNotHome from "./components/SideBarNotHome";
+import { useQuery } from "@tanstack/react-query";
+const fetchData = async () => {
+  return new Promise((res, rej) => {
+    if (res) {
+      res("hello");
+    }
+    if (rej) {
+      rej("error");
+    }
+  });
+};
 
 function App() {
   const dispatch = useDispatch();
-  const { ActiveSession } = useUiRedux();
   const { screenWidth } = UseGetWindowsWidth();
   useEffect(() => {
-    if (screenWidth > 800) {
+    if (screenWidth > 958) {
+      dispatch(setNotificationModalClose());
       dispatch(HamburgerMenuClose());
+      dispatch(setProfileModalClose());
+      dispatch(setMiniSearchModalClose());
     }
   }, [screenWidth, dispatch]);
+
+  const { data } = useQuery({ queryFn: fetchData, queryKey: ["test-data"] });
+  console.log(data);
+
   return (
     <div className="flex min-h-screen max-w-[100vw] bg-[#f5f7fa] rtl fontIR box-border">
       <div className="flex w-auto z-10 fixed top-0 h-[100dvh] translate-x-full  lg:translate-x-0 transition-all duration-300">
         {/* sidebar not home */}
 
-        <div
-          className={`${
-            ActiveSession === "Home" && "hidden"
-          }  flex-col items-center gap-[1.5rem] overflow-hidden pt-[1rem] pr-[0.5rem] pb-[0.5rem] z-10 transform bg-[#fff] whitespace-nowrap flex-shrink-0  `}
-        >
-          <div className="flex flex-col w-[100%] gap-[.5rem] ">
-            <SidebarOptions />
-          </div>
-
-          <div className="gap-[0.5rem] mt-auto flex flex-col w-[100%]">
-            <SettingOptions />
-          </div>
-        </div>
-        {/* sidebar not home */}
-        {/* options of sidebarmenus(not home) */}
-        <div
-          className={`${
-            ActiveSession === "Home" && "hidden"
-          }  flex-col overflow-y-auto overflow-x-hidden whitespace-nowrap w-[216px] bg-[#fff] z-10 border`}
-        >
-          <div className="flex items-center h-[72px] flex-shrink-0 gap-[0.5rem] py-[0rem] px-[.5rem] text-[#333] border"></div>
-          <div className="flex flex-col gap-[.25rem] m-0 "></div>
-        </div>
+        <SideBarNotHome />
 
         {/* options of sidebarmenus(not home) */}
 
@@ -68,11 +68,14 @@ function App() {
         </div>
         {/* app container */}
       </div>
-      {/* <DrawerDefault /> */}
+      <DrawerDefault />
       <DropDown />
 
-      <MiniSideBar />
+      {/* <MiniSideBar /> */}
+
       <ProfileModal />
+      <MiniNotification />
+      <MiniSearchBar />
     </div>
   );
 }

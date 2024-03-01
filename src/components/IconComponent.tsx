@@ -20,6 +20,7 @@ import { TfiHeadphoneAlt } from "react-icons/tfi";
 import { MdCalculate } from "react-icons/md";
 import { IoGlobeSharp } from "react-icons/io5";
 import { RiWallet3Line } from "react-icons/ri";
+import { RiArrowDropLeftLine } from "react-icons/ri";
 
 const iconMap: { [key: string]: ReactElement } = {
   Home: <CiHome />,
@@ -36,7 +37,7 @@ const iconMap: { [key: string]: ReactElement } = {
   More: <IoIosMore />,
   Menu: <RxHamburgerMenu />,
   Close: <MdClose />,
-  ArrowLeft: <FaLessThan />,
+  ArrowLeft: <RiArrowDropLeftLine />,
   Setting: <IoMdSettings />,
   Book: <LuBookMinus />,
   HeadPhone: <TfiHeadphoneAlt />,

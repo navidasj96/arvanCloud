@@ -102,8 +102,8 @@ export default function HomeSidebar() {
         ActiveSession !== "Home" && "hidden"
       }`}
     >
-      <div className="flex flex-col w-[240px] items-center gap-[1.5rem ] overflow-[hidden] py-[1rem] pr-[.5rem] pb-[0.5] border z-10 whitespace-nowrap flex-shrink-0 ">
-        <div className="flex flex-col w-[100%] gap-[1rem]">
+      <div className="flex flex-col w-[240px] items-center gap-[1.5rem] overfilow pt-[1rem] pr-[.5rem] pb-[0.5rem] border z-10 whitespace-nowrap flex-shrink-0 box-border will-change-transform">
+        <div className="flex flex-col w-[100%] gap-[1rem] box-border">
           {MainMenuoptions.map((item, index) => {
             return (
               <div
@@ -114,22 +114,22 @@ export default function HomeSidebar() {
                 <div
                   className={`${
                     item.title === "Home" && "bg-[#e0f7f7]"
-                  } text-[25px] box-border inline-flex items-center justify-center rounded-lg`}
+                  } text-[30px] box-border inline-flex items-center justify-center rounded-lg h-[40px] w-[40px]`}
                 >
                   <IconComponent iconName={item.Icon} />
                 </div>
                 <div
-                  className={`flex-grow color-[#009595] cursor-pointer whitespace-normal`}
+                  className={`flex-grow  cursor-pointer whitespace-normal box-border`}
                 >
                   <div
-                    className={`text-[14px] font-[325] leading-[20px] tracking-[-.24px] ${
+                    className={`text-[16px] font-[325] leading-[20px] tracking-[-.28px] box-border ${
                       item.title === "Home" && "text-[#009595]"
                     }	`}
                   >
                     {item.title}
                   </div>
                   <div
-                    className={`text-[12px] font-[325] leading-[16px] tracking-[-.28px] ${
+                    className={`text-[14px] font-[325] leading-[16px] tracking-[-.24px] box-border ${
                       item.title === "Home" && "text-[#009595]"
                     }	`}
                   >

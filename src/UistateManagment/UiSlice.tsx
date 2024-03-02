@@ -7,6 +7,10 @@ export interface UiState {
   NotificationModalIsOpen: boolean;
   ProfilePopOver: boolean;
   MiniSearchModalIsOpen: boolean;
+  SearchBigModal: boolean;
+  ActiveSideMenu: string;
+  Direction: "rtl" | "ltr";
+  selectedOption: string;
 }
 
 const initialState: UiState = {
@@ -16,6 +20,10 @@ const initialState: UiState = {
   NotificationModalIsOpen: false,
   ProfilePopOver: false,
   MiniSearchModalIsOpen: false,
+  SearchBigModal: false,
+  ActiveSideMenu: "",
+  Direction: "rtl",
+  selectedOption: "",
 };
 
 const UiSlice = createSlice({
@@ -24,6 +32,18 @@ const UiSlice = createSlice({
   reducers: {
     setActiveSession: (state, action: PayloadAction<string>) => {
       state.ActiveSession = action.payload;
+    },
+    setActiveSideMenu: (state, action: PayloadAction<string>) => {
+      state.ActiveSideMenu = action.payload;
+    },
+    setSelectedOption: (state, action: PayloadAction<string>) => {
+      state.selectedOption = action.payload;
+    },
+    setLangPer: (state) => {
+      state.Direction = "rtl";
+    },
+    setLangEng: (state) => {
+      state.Direction = "ltr";
     },
     setHamburgerMenu: (state) => {
       state.HamburgerMenuOpen = !state.HamburgerMenuOpen;
@@ -64,6 +84,9 @@ const UiSlice = createSlice({
     setMiniSearchModalClose: (state) => {
       state.MiniSearchModalIsOpen = false;
     },
+    setSearchBigModalToggle: (state) => {
+      state.SearchBigModal = !state.SearchBigModal;
+    },
   },
 });
 
@@ -82,5 +105,10 @@ export const {
   setProfilePopOverToggle,
   setMiniSearchModalOpen,
   setMiniSearchModalClose,
+  setSearchBigModalToggle,
+  setActiveSideMenu,
+  setSelectedOption,
+  setLangPer,
+  setLangEng,
 } = UiSlice.actions;
 export default UiSlice.reducer;

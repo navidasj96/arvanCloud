@@ -114,7 +114,7 @@ export default function HomeSidebar() {
                 <div
                   className={`${
                     item.title === "Home" && "bg-[#e0f7f7]"
-                  } text-[30px] box-border inline-flex items-center justify-center rounded-lg h-[40px] w-[40px]`}
+                  } text-[30px] box-border inline-flex items-center justify-center rounded-lg h-[40px] w-[40px] text-[#4C4C4C]`}
                 >
                   <IconComponent iconName={item.Icon} />
                 </div>

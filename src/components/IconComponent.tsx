@@ -44,6 +44,7 @@ const iconMap: { [key: string]: ReactElement } = {
   Calculator: <MdCalculate />,
   Globe: <IoGlobeSharp />,
   Wallet: <RiWallet3Line />,
+
   // Add more icons as needed
 };
 interface Props {

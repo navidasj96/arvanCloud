@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { HamburgerMenuClose } from "../UistateManagment/UiSlice";
 
 export default function MiniSideBar() {
-  const { HamburgerMenuIsOpen } = useUiRedux();
+  const { HamburgerMenuIsOpen, Direction } = useUiRedux();
   const dispatch = useDispatch();
   return (
     <div

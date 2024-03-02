@@ -21,6 +21,18 @@ export const useUiRedux = () => {
   const MiniSearchModalIsOpen = useSelector<RootState, string | boolean>(
     (state) => state.uiRedux.MiniSearchModalIsOpen
   );
+  const SearchBigModal = useSelector<RootState, string | boolean>(
+    (state) => state.uiRedux.SearchBigModal
+  );
+  const ActiveSideMenu = useSelector<RootState, string | boolean>(
+    (state) => state.uiRedux.ActiveSideMenu
+  );
+  const Direction = useSelector<RootState, string | boolean>(
+    (state) => state.uiRedux.Direction
+  );
+  const selectedOption = useSelector<RootState, string | boolean>(
+    (state) => state.uiRedux.selectedOption
+  );
   return {
     ActiveSession,
     HamburgerMenuIsOpen,
@@ -28,6 +40,10 @@ export const useUiRedux = () => {
     NotificationModalIsOpen,
     ProfilePopOverIsOpen,
     MiniSearchModalIsOpen,
+    SearchBigModal,
+    ActiveSideMenu,
+    Direction,
+    selectedOption,
   };
 };
 

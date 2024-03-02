@@ -9,7 +9,7 @@ import {
   setNotificationModalClose,
   setProfileModalClose,
 } from "./UistateManagment/UiSlice";
-import { UseGetWindowsWidth } from "./utils/getUiState";
+import { UseGetWindowsWidth, useUiRedux } from "./utils/getUiState";
 import ProfileModal from "./modals.tsx/ProfileModal";
 import HomeSidebar from "./components/HomeSidebar";
 import DropDown from "./components/DropDown";
@@ -18,6 +18,7 @@ import MiniNotification from "./components/MiniNotification";
 import { MiniSearchBar } from "./components/MiniSearchbar";
 import SideBarNotHome from "./components/SideBarNotHome";
 import { useQuery } from "@tanstack/react-query";
+import { SearchBig } from "./components/SearchBig";
 const fetchData = async () => {
   return new Promise((res, rej) => {
     if (res) {
@@ -31,6 +32,7 @@ const fetchData = async () => {
 
 function App() {
   const dispatch = useDispatch();
+  const { Direction } = useUiRedux();
   const { screenWidth } = UseGetWindowsWidth();
   useEffect(() => {
     if (screenWidth > 958) {
@@ -42,11 +44,20 @@ function App() {
   }, [screenWidth, dispatch]);
 
   const { data } = useQuery({ queryFn: fetchData, queryKey: ["test-data"] });
-  console.log(data);
 
   return (
-    <div className="flex min-h-screen max-w-[100vw] bg-[#f5f7fa] rtl fontIR box-border">
-      <div className="flex w-auto z-10 fixed top-0 h-[100dvh] translate-x-full  lg:translate-x-0 transition-all duration-300">
+    <div
+      className={`flex min-h-screen max-w-[100vw] bg-[#f5f7fa] ${
+        Direction === "rtl" && "rtl"
+      } ${Direction === "ltr" && "ltr"} fontIR box-border`}
+    >
+      <div
+        className={`flex w-auto z-10 fixed top-0 h-[100dvh]  ${
+          Direction === "rtl" && "translate-x-full"
+        }  ${
+          Direction === "ltr" && "-translate-x-full"
+        } lg:translate-x-0 transition-all duration-300`}
+      >
         {/* sidebar not home */}
 
         <SideBarNotHome />
@@ -64,7 +75,7 @@ function App() {
         {/* header */}
         {/* app container */}
         <div className="max-w-[100%] relative bg-[#f5f7fa] w-[100%] h-fit opacity-[99%]">
-          <div className="w-[100%] h-[1600px] border bg-gray-300"></div>
+          <div className="w-[100%] h-[1000px] border bg-gray-300"></div>
         </div>
         {/* app container */}
       </div>
@@ -76,6 +87,7 @@ function App() {
       <ProfileModal />
       <MiniNotification />
       <MiniSearchBar />
+      <SearchBig />
     </div>
   );
 }

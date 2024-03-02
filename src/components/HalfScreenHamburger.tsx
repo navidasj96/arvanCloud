@@ -83,8 +83,8 @@ const optionsObjectiveStorage = [
 
 export function DrawerDefault() {
   const dispatch = useDispatch();
-  const { HamburgerMenuIsOpen } = useUiRedux();
-
+  const { HamburgerMenuIsOpen, Direction } = useUiRedux();
+  const rtl = Direction === "rtl";
   const openDrawer = () => dispatch(HamburgerMenuOpen());
   const closeDrawer = () => dispatch(HamburgerMenuClose());
   const { ActiveSession } = useUiRedux();
@@ -141,11 +141,15 @@ export function DrawerDefault() {
           open={HamburgerMenuIsOpen ? true : false}
           onClose={closeDrawer}
           className=""
-          placement="right"
+          placement={rtl ? "right" : "left"}
           placeholder={undefined}
         >
           <div className="flex flex-row h-full lg:translate-x-full">
-            <div className="flex flex-col  items-center gap-[1.5rem] overflow-hidden z-10 transform bg-[#fff] whitespace-nowrap flex-shrink-0 border-l ">
+            <div
+              className={`flex flex-col  items-center gap-[1.5rem] overflow-hidden z-10 transform bg-[#fff] whitespace-nowrap flex-shrink-0 ${
+                rtl && "border-l "
+              } ${!rtl && "border-r "} `}
+            >
               <div className="flex flex-col w-[100%] gap-[.5rem] ">
                 <SidebarOptions />
               </div>

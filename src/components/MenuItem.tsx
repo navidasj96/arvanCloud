@@ -27,6 +27,7 @@ export default function MenuItem({ item }: Props) {
     setClicked((prev) => !prev);
     dispatch(setActiveSideMenu(item.main.title));
     dispatch(setActiveSideMenu(item.main.title));
+    dispatch(setSelectedOption(item.main.title));
   };
   const OptionsSelectHandler = (title: string) => {
     if (item.subMenu && item.subMenu) dispatch(setSelectedOption(title));
@@ -38,8 +39,10 @@ export default function MenuItem({ item }: Props) {
     <li className="box-border flex flex-col space-y-2 ">
       <div
         onClick={onClickHandler}
-        className=" box-border relative  p-[.5rem] flex items-center gap-1 text-[4c4c4c] 
-  rounded-lg cursor-pointer fontIR hover:bg-[#00a7a71a] "
+        className={` box-border relative  p-[.5rem] flex items-center gap-1 text-[4c4c4c] 
+  rounded-lg cursor-pointer fontIR hover:bg-[#00a7a71a] pr-4 ${
+    Direction === "ltr" && "pl-4"
+  } `}
       >
         {item.subMenu && item.subMenu.length > 0 && (
           <div
@@ -50,6 +53,13 @@ export default function MenuItem({ item }: Props) {
           >
             <IconComponent iconName="ArrowLeft" />
           </div>
+        )}
+        {selectedOption === item.main.title && !item.subMenu && (
+          <div
+            className={`w-[5px] absolute ${rtl && "right-[7px]"} ${
+              !rtl && "left-[7px]"
+            } top-[5px] h-[20px] border rounded-lg bg-gray-500`}
+          ></div>
         )}
         <div className="box-border text-[16px] font-[500] leading-[16px] tracking-[-.24px]">
           {item.main.title}

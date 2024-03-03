@@ -33,6 +33,12 @@ export const useUiRedux = () => {
   const selectedOption = useSelector<RootState, string | boolean>(
     (state) => state.uiRedux.selectedOption
   );
+  const theme = useSelector<RootState, string | boolean>(
+    (state) => state.uiRedux.theme
+  );
+  const lang = useSelector<RootState, string | boolean>(
+    (state) => state.uiRedux.lang
+  );
   return {
     ActiveSession,
     HamburgerMenuIsOpen,
@@ -44,6 +50,8 @@ export const useUiRedux = () => {
     ActiveSideMenu,
     Direction,
     selectedOption,
+    theme,
+    lang,
   };
 };
 

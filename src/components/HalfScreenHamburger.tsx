@@ -10,6 +10,7 @@ import SidebarOptions from "./Sidebar";
 import SettingOptions from "./SettingOptions";
 import MenuItems from "./MenuItems";
 import Menu from "./MenuItems";
+import { useTranslate } from "../locales/useLocales";
 
 const Serveroptions = [
   { main: { title: "ابرک‌ها" }, subMenu: [{ title: "لیست ابرک‌ها" }] },
@@ -39,19 +40,7 @@ const Serveroptions = [
     subMenu: [{ title: "لیست ابرک‌عا" }, { title: "انتقال رنج IP" }],
   },
 ];
-const optionsCDN = [
-  { main: { title: "دامنه‌های من" } },
-  {
-    main: { title: "لیست‌ها" },
-  },
-  {
-    main: { title: "لاگ تغییرات بنل" },
-  },
-  {
-    main: { title: "تنظیمات" },
-    subMenu: [{ title: "انتقال دامنه" }],
-  },
-];
+
 const optionsObjectiveStorage = [
   { main: { title: "بیشخان" } },
   {
@@ -83,6 +72,20 @@ const optionsObjectiveStorage = [
 
 export function DrawerDefault() {
   const dispatch = useDispatch();
+  const { t } = useTranslate();
+  const optionsCDN = [
+    { main: { title: t("دامنه‌های من") } },
+    {
+      main: { title: "لیست‌ها" },
+    },
+    {
+      main: { title: "لاگ تغییرات بنل" },
+    },
+    {
+      main: { title: "تنظیمات" },
+      subMenu: [{ title: "انتقال دامنه" }],
+    },
+  ];
   const { HamburgerMenuIsOpen, Direction } = useUiRedux();
   const rtl = Direction === "rtl";
   const openDrawer = () => dispatch(HamburgerMenuOpen());

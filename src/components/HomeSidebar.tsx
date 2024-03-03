@@ -91,7 +91,7 @@ const SettingMenuoptions: {
   },
 ];
 export default function HomeSidebar() {
-  const { ActiveSession } = useUiRedux();
+  const { ActiveSession, theme, lang } = useUiRedux();
   const dispatch = useDispatch();
   const OnclickHandler = (title: string) => {
     dispatch(setActiveSession(title));
@@ -100,9 +100,13 @@ export default function HomeSidebar() {
     <div
       className={`bg-white box-border top-0 flex h-[100dvh] w-[100%] relative ${
         ActiveSession !== "Home" && "hidden"
-      }`}
+      } ${theme === "night" && "night_Mode"}`}
     >
-      <div className="flex flex-col w-[240px] items-center gap-[1.5rem] overfilow pt-[1rem] pr-[.5rem] pb-[0.5rem] border z-10 whitespace-nowrap flex-shrink-0 box-border will-change-transform">
+      <div
+        className={`flex flex-col w-[240px] items-center gap-[1.5rem] overfilow pt-[1rem] pr-[.5rem] pb-[0.5rem] border ${
+          theme === "night" && "border-gray-700"
+        }  z-10 whitespace-nowrap flex-shrink-0 box-border will-change-transform`}
+      >
         <div className="flex flex-col w-[100%] gap-[1rem] box-border">
           {MainMenuoptions.map((item, index) => {
             return (
@@ -128,19 +132,25 @@ export default function HomeSidebar() {
                   >
                     {item.title}
                   </div>
-                  <div
-                    className={`text-[14px] font-[325] leading-[16px] tracking-[-.24px] box-border ${
-                      item.title === "Home" && "text-[#009595]"
-                    }	`}
-                  >
-                    {item.title_fa}
-                  </div>
+                  {lang === "fa" && (
+                    <div
+                      className={`text-[14px] font-[325] leading-[16px] tracking-[-.24px] box-border ${
+                        item.title === "Home" && "text-[#009595]"
+                      }	`}
+                    >
+                      {item.title_fa}
+                    </div>
+                  )}
                 </div>
               </div>
             );
           })}
         </div>
-        <div className="flex flex-col w-[100%] gap-[0.5rem] mt-auto">
+        <div
+          className={`flex flex-col w-[100%] gap-[0.5rem] mt-auto mb-5 space-y-3 ${
+            lang === "en" && "ml-3"
+          }`}
+        >
           {SettingMenuoptions.map((item, index) => {
             return (
               <div
@@ -151,17 +161,19 @@ export default function HomeSidebar() {
                 <div
                   className={`${
                     item.title === "Home" && "bg-[#e0f7f7]"
-                  } text-[25px] box-border inline-flex items-center justify-center rounded-lg`}
+                  } text-[25px] box-border inline-flex items-center justify-center rounded-lg  text-[#4C4C4C]`}
                 >
                   <IconComponent iconName={item.Icon} />
                 </div>
-                <div
-                  className={`flex-grow color-[#009595]  cursor-pointer whitespace-normal`}
-                >
-                  <div className="text-[12px] font-[325] leading-[16px] tracking-[-.28px]	">
-                    {item.title_fa}
+                {lang === "fa" && (
+                  <div
+                    className={`flex-grow color-[#009595]  cursor-pointer whitespace-normal`}
+                  >
+                    <div className="text-[12px] font-[325] leading-[16px] tracking-[-.28px]	">
+                      {item.title_fa}
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             );
           })}

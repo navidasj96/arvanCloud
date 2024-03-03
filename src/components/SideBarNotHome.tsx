@@ -1,8 +1,9 @@
-import React from "react";
+import React, { Suspense } from "react";
 import SettingOptions from "./SettingOptions";
 import SidebarOptions from "./Sidebar";
 import { useUiRedux } from "../utils/getUiState";
 import Menu from "./MenuItems";
+import { useTranslation } from "react-i18next";
 
 const Serveroptions = [
   { main: { title: "ابرک‌ها" }, subMenu: [{ title: "لیست ابرک‌ها" }] },
@@ -32,19 +33,7 @@ const Serveroptions = [
     subMenu: [{ title: "لیست ابرک‌عا" }, { title: "انتقال رنج IP" }],
   },
 ];
-const optionsCDN = [
-  { main: { title: "دامنه‌های من" } },
-  {
-    main: { title: "لیست‌ها" },
-  },
-  {
-    main: { title: "لاگ تغییرات بنل" },
-  },
-  {
-    main: { title: "تنظیمات" },
-    subMenu: [{ title: "انتقال دامنه" }],
-  },
-];
+
 const optionsObjectiveStorage = [
   { main: { title: "بیشخان" } },
   {
@@ -75,7 +64,21 @@ const optionsObjectiveStorage = [
 ];
 
 export default function SideBarNotHome() {
-  const { ActiveSession } = useUiRedux();
+  const { ActiveSession, theme } = useUiRedux();
+  const { t } = useTranslation();
+  const optionsCDN = [
+    { main: { title: t("my_Domains") } },
+    {
+      main: { title: t("lists") },
+    },
+    {
+      main: { title: t("Audit_Logs") },
+    },
+    {
+      main: { title: t("Setting") },
+      subMenu: [{ title: t("Domain_Transfer") }],
+    },
+  ];
   let options = optionsCDN;
   if (ActiveSession === "CDN") options = optionsCDN;
   if (ActiveSession === "Cloud Server") options = Serveroptions;
@@ -85,7 +88,9 @@ export default function SideBarNotHome() {
       <div
         className={`${
           ActiveSession === "Home" && "hidden"
-        } flex flex-col items-center justify-between  gap-[1.5rem] overflow-hidden pt-[1rem] pr-[0.5rem] pb-[0.5rem] z-10 transform bg-[#fff] whitespace-nowrap flex-shrink-0 box-border w-[76px] `}
+        } flex flex-col items-center justify-between  gap-[1.5rem] overflow-hidden pt-[1rem] pr-[0.5rem] pb-[0.5rem] z-10 transform bg-[#fff] ${
+          theme === "night" && "night_Mode"
+        } whitespace-nowrap flex-shrink-0 box-border w-[76px] `}
       >
         <div className="flex flex-col w-[100%] gap-[.5rem] box-border ">
           <SidebarOptions />
@@ -100,9 +105,15 @@ export default function SideBarNotHome() {
       <div
         className={`${
           ActiveSession === "Home" && "hidden"
-        }  flex-col overflow-y-auto overflow-x-hidden whitespace-nowrap w-[216px] bg-[#fff] z-10 border`}
+        }  flex-col overflow-y-auto overflow-x-hidden whitespace-nowrap w-[216px] bg-[#fff] ${
+          theme === "night" && "night_Mode border-gray-700"
+        } z-10 border`}
       >
-        <div className="flex items-center h-[72px] flex-shrink-0 gap-[0.5rem] py-[0rem] px-[.5rem] text-[#333] border"></div>
+        <div
+          className={`flex items-center h-[72px] flex-shrink-0 gap-[0.5rem] py-[0rem] px-[.5rem] text-[#333] border ${
+            theme === "night" && "border-gray-700"
+          }`}
+        ></div>
         <div className="flex flex-col gap-[.25rem] m-0 ">
           <Menu options={options} />
         </div>

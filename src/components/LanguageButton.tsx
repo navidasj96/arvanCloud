@@ -8,17 +8,28 @@ import {
 import IconComponent from "./IconComponent";
 import { useDispatch } from "react-redux";
 import { useUiRedux } from "../utils/getUiState";
-import { setLangEng, setLangPer } from "../UistateManagment/UiSlice";
 import { useNavigate } from "react-router-dom";
+import { useTranslate } from "../locales/useLocales";
+import { setDirection, setLang } from "../UistateManagment/UiSlice";
 
 export function LanguageButton() {
+  const { i18n } = useTranslate();
   const dispatch = useDispatch();
-  const { Direction } = useUiRedux();
+
   const PersianLang = () => {
-    dispatch(setLangPer());
+    dispatch(setDirection("rtl"));
+    const setting = { Direction: "rtl", lang: "fa" };
+    localStorage.setItem("setting", JSON.stringify(setting));
+    i18n.changeLanguage("fa");
+    dispatch(setLang("fa"));
   };
   const EngLang = () => {
-    dispatch(setLangEng());
+    dispatch(setDirection("ltr"));
+    const setting = { Direction: "ltr", lang: "en" };
+    i18n.changeLanguage("en");
+
+    localStorage.setItem("setting", JSON.stringify(setting));
+    dispatch(setLang("en"));
   };
   return (
     <Menu>

@@ -119,6 +119,7 @@ const LeftOptionsBig: {
 export default function Header() {
   const dispatch = useDispatch();
   const { Direction } = useUiRedux();
+
   const RightSmallHandler = (title: string) => {
     if (title === "Menu") dispatch(HamburgerMenuOpen());
     if (title === "Search") dispatch(setMiniSearchModalOpen());

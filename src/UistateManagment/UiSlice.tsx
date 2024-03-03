@@ -11,9 +11,11 @@ export interface UiState {
   ActiveSideMenu: string;
   Direction: "rtl" | "ltr";
   selectedOption: string;
+  theme: "day" | "night";
+  lang: "en" | "fa";
 }
 
-const initialState: UiState = {
+var initialState: UiState = {
   ActiveSession: "Home",
   HamburgerMenuOpen: false,
   ProfileModalIsOpen: false,
@@ -24,6 +26,8 @@ const initialState: UiState = {
   ActiveSideMenu: "",
   Direction: "rtl",
   selectedOption: "",
+  theme: "day",
+  lang: "fa",
 };
 
 const UiSlice = createSlice({
@@ -39,11 +43,8 @@ const UiSlice = createSlice({
     setSelectedOption: (state, action: PayloadAction<string>) => {
       state.selectedOption = action.payload;
     },
-    setLangPer: (state) => {
-      state.Direction = "rtl";
-    },
-    setLangEng: (state) => {
-      state.Direction = "ltr";
+    setDirection: (state, action: PayloadAction<"rtl" | "ltr">) => {
+      state.Direction = action.payload;
     },
     setHamburgerMenu: (state) => {
       state.HamburgerMenuOpen = !state.HamburgerMenuOpen;
@@ -87,6 +88,15 @@ const UiSlice = createSlice({
     setSearchBigModalToggle: (state) => {
       state.SearchBigModal = !state.SearchBigModal;
     },
+    setInitialTheme: (state, action: PayloadAction<"rtl" | "ltr">) => {
+      state.Direction = action.payload;
+    },
+    setTheme: (state, action: PayloadAction<"day" | "night">) => {
+      state.theme = action.payload;
+    },
+    setLang: (state, action: PayloadAction<"en" | "fa">) => {
+      state.lang = action.payload;
+    },
   },
 });
 
@@ -108,7 +118,9 @@ export const {
   setSearchBigModalToggle,
   setActiveSideMenu,
   setSelectedOption,
-  setLangPer,
-  setLangEng,
+  setDirection,
+  setInitialTheme,
+  setTheme,
+  setLang,
 } = UiSlice.actions;
 export default UiSlice.reducer;

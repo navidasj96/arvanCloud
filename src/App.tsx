@@ -5,6 +5,8 @@ import Header from "./components/Header";
 import { useDispatch } from "react-redux";
 import {
   HamburgerMenuClose,
+  setInitialTheme,
+  setLang,
   setMiniSearchModalClose,
   setNotificationModalClose,
   setProfileModalClose,
@@ -19,6 +21,7 @@ import { MiniSearchBar } from "./components/MiniSearchbar";
 import SideBarNotHome from "./components/SideBarNotHome";
 import { useQuery } from "@tanstack/react-query";
 import { SearchBig } from "./components/SearchBig";
+import { useTranslate } from "./locales/useLocales";
 const fetchData = async () => {
   return new Promise((res, rej) => {
     if (res) {
@@ -31,6 +34,21 @@ const fetchData = async () => {
 };
 
 function App() {
+  const { i18n } = useTranslate();
+
+  useEffect(() => {
+    const theme = window.localStorage.getItem("setting") as any;
+    if (theme) {
+      const res = JSON.parse(theme);
+      dispatch(setInitialTheme(res.Direction));
+      if (res.lang) {
+        dispatch(setLang(res.lang));
+        i18n.changeLanguage(res.lang);
+      }
+    }
+
+    // if (theme) dispatch(setInitialTheme(theme.Direction));
+  }, []);
   const dispatch = useDispatch();
   const { Direction } = useUiRedux();
   const { screenWidth } = UseGetWindowsWidth();
@@ -43,7 +61,7 @@ function App() {
     }
   }, [screenWidth, dispatch]);
 
-  const { data } = useQuery({ queryFn: fetchData, queryKey: ["test-data"] });
+  // const { data } = useQuery({ queryFn: fetchData, queryKey: ["test-data"] });
 
   return (
     <div

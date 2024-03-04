@@ -1,5 +1,7 @@
 import { Navigate, createBrowserRouter, useRoutes } from "react-router-dom";
 import App from "../../App";
+import { DashboardRoutes } from "./dashboard";
+import { LoginRoutes } from "./login";
 
 // ----------------------------------------------------------------------
 
@@ -18,7 +20,8 @@ export default function Router() {
       path: "/",
       element: <App />,
     },
-
+    ...DashboardRoutes,
+    ...LoginRoutes,
     // // Auth routes
     // ...authRoutes,
     // ...authDemoRoutes,

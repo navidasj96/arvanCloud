@@ -5,35 +5,6 @@ import { useUiRedux } from "../utils/getUiState";
 import Menu from "./MenuItems";
 import { useTranslation } from "react-i18next";
 
-const Serveroptions = [
-  { main: { title: "ابرک‌ها" }, subMenu: [{ title: "لیست ابرک‌ها" }] },
-  {
-    main: { title: "شبکه" },
-    subMenu: [
-      { title: "IP اینترنتی" },
-      { title: "شبکه خصوصی" },
-      { title: "IP شناور" },
-    ],
-  },
-  {
-    main: { title: "امنیت" },
-    subMenu: [{ title: "فایروال" }, { title: "کلید  SSH" }],
-  },
-  {
-    main: { title: "مدیریت دیسک" },
-    subMenu: [
-      { title: "دیسک" },
-      { title: "اسنب شات" },
-      { title: "بکاب" },
-      { title: "سیستم‌عامل شخصی" },
-    ],
-  },
-  {
-    main: { title: "راه‌کارهای سازمانی" },
-    subMenu: [{ title: "لیست ابرک‌عا" }, { title: "انتقال رنج IP" }],
-  },
-];
-
 const optionsObjectiveStorage = [
   { main: { title: "بیشخان" } },
   {
@@ -77,6 +48,37 @@ export default function SideBarNotHome() {
     {
       main: { title: t("Setting") },
       subMenu: [{ title: t("Domain_Transfer") }],
+    },
+  ];
+  const Serveroptions = [
+    {
+      main: { title: t("instances") },
+      subMenu: [{ title: t("Instance_list") }],
+    },
+    {
+      main: { title: t("network") },
+      subMenu: [
+        { title: t("intenet_ip") },
+        { title: t("private_network") },
+        { title: t("float_ip") },
+      ],
+    },
+    {
+      main: { title: t("security") },
+      subMenu: [{ title: t("fireWall") }, { title: t("SSH_key") }],
+    },
+    {
+      main: { title: t("disk_management") },
+      subMenu: [
+        { title: t("volume") },
+        { title: t("snapshot") },
+        { title: t("backup") },
+        { title: t("custom_image") },
+      ],
+    },
+    {
+      main: { title: t("enterprise_solution") },
+      subMenu: [{ title: t("byoip") }],
     },
   ];
   let options = optionsCDN;

@@ -6,6 +6,8 @@ import {
   setActiveSession,
 } from "../UistateManagment/UiSlice";
 import { useUiRedux } from "../utils/getUiState";
+import { useRouter } from "../routes/sections/hooks/use-router";
+import { Link } from "react-router-dom";
 const MainMenuoptions: {
   title: string;
   title_fa: string;
@@ -18,14 +20,14 @@ const MainMenuoptions: {
     title_fa: "صفحه اصلی",
     Icon: "Home",
     abbrev: "Home",
-    route: "/",
+    route: "/dashboard",
   },
   {
     title: "CDN",
     title_fa: "شبکه توزیع محتوا",
     Icon: "CDN",
     abbrev: "CDN",
-    route: "/cdn/domains",
+    route: "/dashboard/cdn",
   },
   {
     title: "Cloud Server",
@@ -66,10 +68,11 @@ const MainMenuoptions: {
 
 export default function SidebarOptions() {
   const { ActiveSession, HamburgerMenuIsOpen } = useUiRedux();
-
+  const router = useRouter();
   const dispatch = useDispatch();
-  const OnclickHandler = (title: string) => {
-    dispatch(setActiveSession(title));
+  const OnclickHandler = (item: { title: string; route: string }) => {
+    // router.push(item.route);
+    dispatch(setActiveSession(item.title));
   };
   return (
     <div className="flex flex-col w-full ">
@@ -91,7 +94,7 @@ export default function SidebarOptions() {
       {MainMenuoptions.map((item) => {
         return (
           <div
-            onClick={() => OnclickHandler(item.title)}
+            onClick={() => OnclickHandler(item)}
             className="flex  mt-2 flex-col relative items-center color-[#4c4c4c] cursor-pointer w-[56.22px] h-[56px] "
           >
             <div

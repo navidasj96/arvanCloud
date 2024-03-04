@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import IconComponent from "./IconComponent";
 import { useDispatch } from "react-redux";
 import {
   HamburgerMenuOpen,
+  setMiniSearchModalOpen,
+  setNotificationModalOpen,
   setProfileModalOpen,
+  setSearchBigModalToggle,
 } from "../UistateManagment/UiSlice";
+import ProfileBig from "./ProfileBig";
+import WalletBig from "./WalletBig";
+import { useUiRedux } from "../utils/getUiState";
+import { LanguageButton } from "./LanguageButton";
 
 const leftOptionsSmall: {
   title: string;
@@ -100,17 +107,36 @@ const LeftOptionsBig: {
     abbrev: "Code",
     route: "Code",
   },
+  {
+    title: "Search",
+    title_fa: "Search",
+    Icon: "Search",
+    abbrev: "Search",
+    route: "/",
+  },
 ];
 
 export default function Header() {
   const dispatch = useDispatch();
+  const { Direction } = useUiRedux();
+
   const RightSmallHandler = (title: string) => {
-    dispatch(HamburgerMenuOpen());
+    if (title === "Menu") dispatch(HamburgerMenuOpen());
+    if (title === "Search") dispatch(setMiniSearchModalOpen());
   };
 
   const LeftOptionClickHandler = (title: string) => {
     if (title === "Profile") {
       dispatch(setProfileModalOpen());
+    }
+    if (title === "Notification") {
+      dispatch(setNotificationModalOpen());
+    }
+  };
+
+  const LeftBigOptionsClickHandler = (title: string) => {
+    if (title === "Search") {
+      dispatch(setSearchBigModalToggle());
     }
   };
   return (
@@ -143,21 +169,56 @@ export default function Header() {
               </div>
             );
           })}
+          <LanguageButton />
         </div>
         {/* big items from here -------------------------------------- */}
 
-        <div className=" flex-row-reverse items-center gap-[0.5rem] hidden lg:flex lg:mr-auto">
+        <div
+          className={`flex-row-reverse items-center gap-[0.5rem] hidden lg:flex ${
+            Direction === "rtl" && "lg:mr-auto"
+          } ${Direction === "ltr" && "lg:ml-auto"}`}
+        >
           {LeftOptionsBig.map((item) => {
             return (
-              <div
-                className={`h-[36px] w-[36px] justify-center  inline-flex items-center   hover:bg-gray-300 rounded-lg`}
-              >
-                <span className="text-[20px] text-[#4C4C4C]">
-                  <IconComponent iconName={item.Icon} />
-                </span>
-              </div>
+              <>
+                {item.title === "Profile" && <ProfileBig />}
+                {item.title === "Wallet" && <WalletBig />}
+                {item.title !== "Profile" && item.title !== "Wallet" && (
+                  <div
+                    onClick={() => LeftBigOptionsClickHandler(item.title)}
+                    className={` ${
+                      item.title !== "Profile" &&
+                      item.title !== "Wallet" &&
+                      " h-[36px] w-[36px]"
+                    } ${
+                      item.title === "Profile" && "w-[176px] border   h-[36px]"
+                    }  ${
+                      item.title === "Wallet" && "w-[176px] border  h-[36px] "
+                    } justify-center  inline-flex items-center   hover:bg-gray-300 rounded-lg cursor-pointer`}
+                  >
+                    <span
+                      className={` text-[20px] text-[#4C4C4C] ${
+                        item.title === "Wallet" && "ml-auto mr-5 "
+                      }`}
+                    >
+                      <IconComponent iconName={item.Icon} />
+                    </span>
+                    {item.title === "Profile" && (
+                      <div className="text-[10px] font-[300] tracking-[-.2px] whitespace-nowrap text-ellipsis overflow-hidden max-w-[100%] text-[#333] mr-2">
+                        نام و نام خانوادگی
+                      </div>
+                    )}
+                    {item.title === "Wallet" && (
+                      <div className="text-[10px] font-[300] tracking-[-.2px] whitespace-nowrap text-ellipsis overflow-hidden max-w-[100%] text-[#333] ml-5">
+                        ۰ ریال
+                      </div>
+                    )}
+                  </div>
+                )}
+              </>
             );
           })}
+          <LanguageButton />
         </div>
       </div>
     </div>

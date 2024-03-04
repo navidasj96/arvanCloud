@@ -6,14 +6,28 @@ export interface UiState {
   ProfileModalIsOpen: boolean;
   NotificationModalIsOpen: boolean;
   ProfilePopOver: boolean;
+  MiniSearchModalIsOpen: boolean;
+  SearchBigModal: boolean;
+  ActiveSideMenu: string;
+  Direction: "rtl" | "ltr";
+  selectedOption: string;
+  theme: "day" | "night";
+  lang: "en" | "fa";
 }
 
-const initialState: UiState = {
+var initialState: UiState = {
   ActiveSession: "Home",
   HamburgerMenuOpen: false,
   ProfileModalIsOpen: false,
   NotificationModalIsOpen: false,
   ProfilePopOver: false,
+  MiniSearchModalIsOpen: false,
+  SearchBigModal: false,
+  ActiveSideMenu: "",
+  Direction: "rtl",
+  selectedOption: "",
+  theme: "day",
+  lang: "fa",
 };
 
 const UiSlice = createSlice({
@@ -22,6 +36,15 @@ const UiSlice = createSlice({
   reducers: {
     setActiveSession: (state, action: PayloadAction<string>) => {
       state.ActiveSession = action.payload;
+    },
+    setActiveSideMenu: (state, action: PayloadAction<string>) => {
+      state.ActiveSideMenu = action.payload;
+    },
+    setSelectedOption: (state, action: PayloadAction<string>) => {
+      state.selectedOption = action.payload;
+    },
+    setDirection: (state, action: PayloadAction<"rtl" | "ltr">) => {
+      state.Direction = action.payload;
     },
     setHamburgerMenu: (state) => {
       state.HamburgerMenuOpen = !state.HamburgerMenuOpen;
@@ -56,6 +79,24 @@ const UiSlice = createSlice({
     setProfilePopOverToggle: (state) => {
       state.ProfilePopOver = !state.ProfilePopOver;
     },
+    setMiniSearchModalOpen: (state) => {
+      state.MiniSearchModalIsOpen = true;
+    },
+    setMiniSearchModalClose: (state) => {
+      state.MiniSearchModalIsOpen = false;
+    },
+    setSearchBigModalToggle: (state) => {
+      state.SearchBigModal = !state.SearchBigModal;
+    },
+    setInitialTheme: (state, action: PayloadAction<"rtl" | "ltr">) => {
+      state.Direction = action.payload;
+    },
+    setTheme: (state, action: PayloadAction<"day" | "night">) => {
+      state.theme = action.payload;
+    },
+    setLang: (state, action: PayloadAction<"en" | "fa">) => {
+      state.lang = action.payload;
+    },
   },
 });
 
@@ -72,5 +113,14 @@ export const {
   setProfilePopOverOpen,
   setProfilePopOverClose,
   setProfilePopOverToggle,
+  setMiniSearchModalOpen,
+  setMiniSearchModalClose,
+  setSearchBigModalToggle,
+  setActiveSideMenu,
+  setSelectedOption,
+  setDirection,
+  setInitialTheme,
+  setTheme,
+  setLang,
 } = UiSlice.actions;
 export default UiSlice.reducer;

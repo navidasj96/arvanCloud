@@ -20,6 +20,8 @@ import { TfiHeadphoneAlt } from "react-icons/tfi";
 import { MdCalculate } from "react-icons/md";
 import { IoGlobeSharp } from "react-icons/io5";
 import { RiWallet3Line } from "react-icons/ri";
+import { RiArrowDropLeftLine } from "react-icons/ri";
+import { CgDarkMode } from "react-icons/cg";
 
 const iconMap: { [key: string]: ReactElement } = {
   Home: <CiHome />,
@@ -36,13 +38,14 @@ const iconMap: { [key: string]: ReactElement } = {
   More: <IoIosMore />,
   Menu: <RxHamburgerMenu />,
   Close: <MdClose />,
-  ArrowLeft: <FaLessThan />,
+  ArrowLeft: <RiArrowDropLeftLine />,
   Setting: <IoMdSettings />,
   Book: <LuBookMinus />,
   HeadPhone: <TfiHeadphoneAlt />,
   Calculator: <MdCalculate />,
   Globe: <IoGlobeSharp />,
   Wallet: <RiWallet3Line />,
+  Theme: <CgDarkMode />,
   // Add more icons as needed
 };
 interface Props {

@@ -7,11 +7,11 @@ import { useDispatch } from "react-redux";
 import { HamburgerMenuClose } from "../UistateManagment/UiSlice";
 
 export default function MiniSideBar() {
-  const { HamburgerMenuIsOpen } = useUiRedux();
+  const { HamburgerMenuIsOpen, Direction } = useUiRedux();
   const dispatch = useDispatch();
   return (
     <div
-      className={`fixed top-0 h-[100dvh] w-[100%] md:w-auto box-border transition-all z-[2] ${
+      className={`fixed top-0 h-[100dvh] w-[100%] md:w-auto box-border transition-all z-[3] ${
         HamburgerMenuIsOpen && "translate-x-0 "
       } ${!HamburgerMenuIsOpen && "translate-x-full"} `}
     >

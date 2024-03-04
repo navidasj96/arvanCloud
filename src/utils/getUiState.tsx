@@ -18,12 +18,40 @@ export const useUiRedux = () => {
   const ProfilePopOverIsOpen = useSelector<RootState, string | boolean>(
     (state) => state.uiRedux.ProfilePopOver
   );
+  const MiniSearchModalIsOpen = useSelector<RootState, string | boolean>(
+    (state) => state.uiRedux.MiniSearchModalIsOpen
+  );
+  const SearchBigModal = useSelector<RootState, string | boolean>(
+    (state) => state.uiRedux.SearchBigModal
+  );
+  const ActiveSideMenu = useSelector<RootState, string | boolean>(
+    (state) => state.uiRedux.ActiveSideMenu
+  );
+  const Direction = useSelector<RootState, string | boolean>(
+    (state) => state.uiRedux.Direction
+  );
+  const selectedOption = useSelector<RootState, string | boolean>(
+    (state) => state.uiRedux.selectedOption
+  );
+  const theme = useSelector<RootState, string | boolean>(
+    (state) => state.uiRedux.theme
+  );
+  const lang = useSelector<RootState, string | boolean>(
+    (state) => state.uiRedux.lang
+  );
   return {
     ActiveSession,
     HamburgerMenuIsOpen,
     ProfileModalIsOpen,
     NotificationModalIsOpen,
     ProfilePopOverIsOpen,
+    MiniSearchModalIsOpen,
+    SearchBigModal,
+    ActiveSideMenu,
+    Direction,
+    selectedOption,
+    theme,
+    lang,
   };
 };
 
@@ -55,20 +83,22 @@ export function getWindowDimensions() {
 }
 
 export default function useWindowDimensions() {
-  const [windowDimensions, setWindowDimensions] = useState(
-    getWindowDimensions()
-  );
+  const [screenWidth, setScreenWidth] = useState<number>();
 
   useEffect(() => {
-    function handleResize() {
-      setWindowDimensions(getWindowDimensions());
-    }
+    const handleWindowSizeChange = () => {
+      setScreenWidth(window.innerWidth);
+    };
 
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    window.addEventListener("resize", handleWindowSizeChange);
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("resize", handleWindowSizeChange);
+    };
   }, []);
 
-  return windowDimensions;
+  return { screenWidth };
 }
 
 // function useOutsideAlerter(ref: RefObject<HTMLElement>) {

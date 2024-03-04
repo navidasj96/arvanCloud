@@ -1,8 +1,5 @@
-import React, { useEffect, useState } from "react";
-import "./App.css";
-import Header from "./components/Header";
-
-import { useDispatch } from "react-redux";
+import React, { useEffect, useRef, useState } from "react";
+import { useTranslate } from "../../locales/useLocales";
 import {
   HamburgerMenuClose,
   setInitialTheme,
@@ -10,33 +7,26 @@ import {
   setMiniSearchModalClose,
   setNotificationModalClose,
   setProfileModalClose,
-} from "./UistateManagment/UiSlice";
-import { UseGetWindowsWidth, useUiRedux } from "./utils/getUiState";
-import ProfileModal from "./modals.tsx/ProfileModal";
-import HomeSidebar from "./components/HomeSidebar";
-import DropDown from "./components/DropDown";
-import { DrawerDefault } from "./components/HalfScreenHamburger";
-import MiniNotification from "./components/MiniNotification";
-import { MiniSearchBar } from "./components/MiniSearchbar";
-import SideBarNotHome from "./components/SideBarNotHome";
-import { useQuery } from "@tanstack/react-query";
-import { SearchBig } from "./components/SearchBig";
-import { useTranslate } from "./locales/useLocales";
-import CDN from "./pages/dashboard/CDN";
-const fetchData = async () => {
-  return new Promise((res, rej) => {
-    if (res) {
-      res("hello");
-    }
-    if (rej) {
-      rej("error");
-    }
-  });
-};
+} from "../../UistateManagment/UiSlice";
+import { useDispatch } from "react-redux";
+import { UseGetWindowsWidth, useUiRedux } from "../../utils/getUiState";
+import SideBarNotHome from "../../components/SideBarNotHome";
+import HomeSidebar from "../../components/HomeSidebar";
+import Header from "../../components/Header";
+import { DrawerDefault } from "../../components/HalfScreenHamburger";
+import DropDown from "../../components/DropDown";
+import ProfileModal from "../../modals.tsx/ProfileModal";
+import MiniNotification from "../../components/MiniNotification";
+import { MiniSearchBar } from "../../components/MiniSearchbar";
+import { SearchBig } from "../../components/SearchBig";
 
-function App() {
+interface Props {
+  children: React.ReactNode;
+}
+
+function DashboardLayout({ children }: Props) {
   const { i18n } = useTranslate();
-
+  const sidebarRef = useRef();
   useEffect(() => {
     const theme = window.localStorage.getItem("setting") as any;
     if (theme) {
@@ -53,7 +43,9 @@ function App() {
   const dispatch = useDispatch();
   const { Direction } = useUiRedux();
   const { screenWidth } = UseGetWindowsWidth();
-  // const mainContainerWidth = screenWidth - 292;
+  const [containerWidth, setContainerWidth] = useState<number>();
+  const divRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (screenWidth > 958) {
       dispatch(setNotificationModalClose());
@@ -62,9 +54,22 @@ function App() {
       dispatch(setMiniSearchModalClose());
     }
   }, [screenWidth, dispatch]);
+  useEffect(() => {
+    if (divRef.current) {
+      const divWidth = divRef.current?.clientWidth;
+      setContainerWidth(((screenWidth - divWidth) / screenWidth) * 100);
+    }
 
+    if (screenWidth < 960) {
+      setContainerWidth(100);
+    }
+
+    console.log("containerWidth", containerWidth);
+  }, [screenWidth, divRef.current?.clientWidth, containerWidth]);
   // const { data } = useQuery({ queryFn: fetchData, queryKey: ["test-data"] });
-
+  const ClickHandler = () => {
+    setContainerWidth(divRef.current?.clientWidth);
+  };
   return (
     <div
       className={`flex min-h-screen max-w-[100vw] bg-[#f5f7fa] ${
@@ -72,6 +77,8 @@ function App() {
       } ${Direction === "ltr" && "ltr"} fontIR box-border`}
     >
       <div
+        ref={divRef}
+        onClick={ClickHandler}
         className={`flex w-auto z-10 fixed top-0 h-[100dvh]  ${
           Direction === "rtl" && "translate-x-full"
         }  ${
@@ -89,13 +96,18 @@ function App() {
         {/* side bar on home menu */}
       </div>
       {/* default content */}
-      <div className="flex-1 flex flex-col box-border ">
+      <div
+        className={` flex flex-col  box-border w-[100%]  ${
+          Direction === "rtl" && "mr-auto"
+        } ${Direction === "ltr" && "ml-auto"}`}
+        style={{ width: `${containerWidth!}%` }}
+      >
         {/* header */}
         <Header />
         {/* header */}
         {/* app container */}
         <div className="max-w-[100%] relative bg-[#f5f7fa] w-[100%] h-fit opacity-[99%]">
-          <CDN />
+          {children}
         </div>
         {/* app container */}
       </div>
@@ -112,4 +124,4 @@ function App() {
   );
 }
 
-export default App;
+export default DashboardLayout;

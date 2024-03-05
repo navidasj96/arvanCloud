@@ -1,45 +1,53 @@
-// DropdownMenu.jsx
-import React, { useState } from "react";
+import * as React from "react";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import NativeSelect from "@mui/material/NativeSelect";
-const DropdownMenu = () => {
-  const options = ["Option 1", "Option 2", "Option 3"];
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [selectedOption, setSelectedOption] = useState(options[0]);
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { useDispatch } from "react-redux";
+import { useUiRedux } from "../utils/getUiState";
+import { setAddItemState } from "../UistateManagment/UiSlice";
 
-  const handleClick = (event: any) => {
-    setAnchorEl(event.currentTarget);
-  };
+interface Props {
+  title: string;
+  item: { value: number; title: string }[];
+}
+interface MyObject {
+  [key: string]: any;
+}
+export default function BasicSelect({ title, item }: Props) {
+  const dispatch = useDispatch();
+  const { addItemState } = useUiRedux();
+  const [age, setAge] = React.useState<string>(item[0].title);
 
-  const handleClose = (option: any) => {
-    setAnchorEl(null);
-    if (option) {
-      setSelectedOption(option);
-    }
+  const handleChange = (event: SelectChangeEvent) => {
+    let newAtrr: MyObject = {};
+    newAtrr[`${title}`] = event.target.value;
+    dispatch(setAddItemState(newAtrr));
+    setAge(event.target.value as string);
   };
+  console.log("addItemState is ", addItemState);
 
   return (
-    <div>
+    <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
-        <InputLabel variant="standard" htmlFor="uncontrolled-native">
-          Age
-        </InputLabel>
-        <NativeSelect
-          defaultValue={30}
-          inputProps={{
-            name: "age",
-            id: "uncontrolled-native",
-          }}
+        <InputLabel id="demo-simple-select-label">{title}</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={age}
+          label={title}
+          onChange={handleChange}
         >
-          <option value={10}>Ten</option>
-          <option value={20}>Twenty</option>
-          <option value={30}>Thirty</option>
-        </NativeSelect>
+          {item.map((option, index) => {
+            return (
+              <MenuItem key={index} value={option.value}>
+                <p className="fontIR">{option.title}</p>
+              </MenuItem>
+            );
+          })}
+        </Select>
       </FormControl>
-    </div>
+    </Box>
   );
-};
-
-export default DropdownMenu;
+}

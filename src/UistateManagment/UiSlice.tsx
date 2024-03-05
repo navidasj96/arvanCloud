@@ -13,6 +13,7 @@ export interface UiState {
   selectedOption: string;
   theme: "day" | "night";
   lang: "en" | "fa";
+  addItemState: {};
 }
 
 var initialState: UiState = {
@@ -28,6 +29,7 @@ var initialState: UiState = {
   selectedOption: "",
   theme: "day",
   lang: "fa",
+  addItemState: {},
 };
 
 const UiSlice = createSlice({
@@ -97,6 +99,9 @@ const UiSlice = createSlice({
     setLang: (state, action: PayloadAction<"en" | "fa">) => {
       state.lang = action.payload;
     },
+    setAddItemState: (state, action: PayloadAction<any>) => {
+      state.addItemState = { ...state.addItemState, ...action.payload };
+    },
   },
 });
 
@@ -122,5 +127,6 @@ export const {
   setInitialTheme,
   setTheme,
   setLang,
+  setAddItemState,
 } = UiSlice.actions;
 export default UiSlice.reducer;

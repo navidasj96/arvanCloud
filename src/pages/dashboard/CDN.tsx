@@ -1,9 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { fetchCreateItemDropDowns } from "../../utils/create-item-fetchers";
 import DropdownMenu from "../../components/DropDownMenu";
+import MultipleImageSelector from "../../components/MultipleImageSelector";
 
 export default function CDN() {
   const [dropdowns, setDropdowns] = useState([{}]);
+  const item = [
+    { value: 0, title: "غیرفال" },
+    { value: 1, title: "فعال" },
+    { value: 2, title: "نامشخص" },
+  ];
+  const Days = [
+    { value: 0, title: "شنبه" },
+    { value: 1, title: "یکشنبه" },
+    { value: 2, title: "دوشنبه" },
+    { value: 3, title: "سه شنبه" },
+    { value: 4, title: "چهارشنبه" },
+    { value: 5, title: "بینشجنه" },
+    { value: 6, title: "جمعه" },
+  ];
   // useEffect(() => {
   //   const options = [
   //     "ItemStatus",
@@ -29,14 +44,17 @@ export default function CDN() {
   // console.log("dropdowns", dropdowns);
 
   return (
-    <div className="w-full flex h-[800px]   ">
+    <div className="w-full flex h-[800px]  ">
       <div className="mx-auto my-auto">
-        <button
-          className="border bg-red-200 cursor-pointer"
-          onClick={() => alert("clickeds")}
-        >
-          click me
-        </button>
+        <div className="flex flex-col sapce-y-3">
+          <div className="w-[100px]">
+            <DropdownMenu title="label" item={item} />
+          </div>
+          <div className="w-[100px]">
+            <DropdownMenu title="DAYs" item={Days} />
+          </div>
+          <MultipleImageSelector />
+        </div>
       </div>
     </div>
   );

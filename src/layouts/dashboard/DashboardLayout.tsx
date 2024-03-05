@@ -112,7 +112,6 @@ function DashboardLayout({ children }: Props) {
         {/* app container */}
       </div>
       <DrawerDefault />
-      <DropDown />
 
       {/* <MiniSideBar /> */}
 

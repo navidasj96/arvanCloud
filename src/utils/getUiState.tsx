@@ -39,6 +39,9 @@ export const useUiRedux = () => {
   const lang = useSelector<RootState, string | boolean>(
     (state) => state.uiRedux.lang
   );
+  const addItemState = useSelector<RootState, any>(
+    (state) => state.uiRedux.addItemState
+  );
   return {
     ActiveSession,
     HamburgerMenuIsOpen,
@@ -52,6 +55,7 @@ export const useUiRedux = () => {
     selectedOption,
     theme,
     lang,
+    addItemState,
   };
 };
 

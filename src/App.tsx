@@ -100,7 +100,6 @@ function App() {
         {/* app container */}
       </div>
       <DrawerDefault />
-      <DropDown />
 
       {/* <MiniSideBar /> */}
 

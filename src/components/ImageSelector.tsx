@@ -31,10 +31,20 @@ export default function ImageSelector({
   );
 
   return (
-    <div className="flex items-center space-x-4">
+    <div className="flex  items-center space-x-5  px-5">
+      <ImageInput
+        id={id}
+        onChange={onChange}
+        multiple={multiple}
+      >
+        {icon}
+      </ImageInput>
       {images?.map((img, index) => {
         return (
-          <div key={index} className="relative">
+          <div
+            key={index}
+            className="relative px-2"
+          >
             <SelectedImageThumb src={img} />
             {multiple ? (
               <div
@@ -47,10 +57,6 @@ export default function ImageSelector({
           </div>
         );
       })}
-
-      <ImageInput id={id} onChange={onChange} multiple={multiple}>
-        {icon}
-      </ImageInput>
     </div>
   );
 }

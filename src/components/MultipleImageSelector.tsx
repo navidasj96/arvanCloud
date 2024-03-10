@@ -1,10 +1,21 @@
-import React, { ChangeEventHandler, useState, useTransition } from "react";
+import React, {
+  ChangeEventHandler,
+  useEffect,
+  useState,
+  useTransition,
+} from "react";
 import ImageSelector from "./ImageSelector";
+import { UploadImage } from "../utils/upload-images";
+import { useDispatch } from "react-redux";
+import { setAddItemState } from "../UistateManagment/UiSlice";
 
 const MultipleImageSelector = () => {
+  const dispatch = useDispatch();
   const [isPending, startTransition] = useTransition();
 
   const [imageFiles, setImageFiles] = useState<File[]>([]);
+
+  const [uploades, setUploadRes] = useState();
 
   const [productImagesSource, setProductImagesSource] = useState<string[]>();
 
@@ -34,17 +45,32 @@ const MultipleImageSelector = () => {
     //and update ui
     const newImagesSource = productImagesSource.filter((_, i) => {
       if (i !== index) return true;
+      return null;
     });
     setProductImagesSource([...newImagesSource]);
   };
-  console.log("imageFiles", imageFiles);
-  console.log("productImagesSource", productImagesSource);
+  // console.log("imageFiles", imageFiles);
+  // console.log("productImagesSource", productImagesSource);
 
+  useEffect(() => {
+    const uploadImages = async () => {
+      imageFiles.forEach(async (item, index) => {
+        const { res } = await UploadImage(item);
+        // console.log("respose of uploaded image", res);
+        if (res.result === 0) {
+          let contens: any = {};
+          contens[`image${index}`] = res.content;
+          dispatch(setAddItemState(contens));
+        }
+      });
+    };
+    uploadImages();
+  }, [imageFiles]);
   return (
-    <div>
-      <form className="space-y-6">
+    <div className="w-full flex  ">
+      <form className="space-y-6 ">
         <div className="space-y-4">
-          <h3>Images</h3>
+          <h3 className="fontIR py-5">تصاویر دیگر:</h3>
           <ImageSelector
             multiple
             id="images"

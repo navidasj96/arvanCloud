@@ -24,7 +24,7 @@ const AddItemForm = () => {
     },
     onSubmit: (values) => {
       // Handle form submission logic here
-      console.log("Form submitted:", values);
+      // console.log("Form submitted:", values);
     },
   });
 

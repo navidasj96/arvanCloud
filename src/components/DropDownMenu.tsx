@@ -10,7 +10,7 @@ import { setAddItemState } from "../UistateManagment/UiSlice";
 
 interface Props {
   title: string;
-  item: { value: number; title: string }[];
+  item: { value: number; content: string; name?: string }[];
 }
 interface MyObject {
   [key: string]: any;
@@ -18,7 +18,7 @@ interface MyObject {
 export default function BasicSelect({ title, item }: Props) {
   const dispatch = useDispatch();
   const { addItemState } = useUiRedux();
-  const [age, setAge] = React.useState<string>(item[0].title);
+  const [age, setAge] = React.useState<string>(item[0].content);
 
   const handleChange = (event: SelectChangeEvent) => {
     let newAtrr: MyObject = {};
@@ -26,10 +26,10 @@ export default function BasicSelect({ title, item }: Props) {
     dispatch(setAddItemState(newAtrr));
     setAge(event.target.value as string);
   };
-  console.log("addItemState is ", addItemState);
+  // console.log("addItemState is ", addItemState);
 
   return (
-    <Box sx={{ minWidth: 120 }}>
+    <Box sx={{ minWidth: 120, width: 200 }}>
       <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label">{title}</InputLabel>
         <Select
@@ -41,8 +41,13 @@ export default function BasicSelect({ title, item }: Props) {
         >
           {item.map((option, index) => {
             return (
-              <MenuItem key={index} value={option.value}>
-                <p className="fontIR">{option.title}</p>
+              <MenuItem
+                key={index}
+                value={option.name ? option.name : option.value}
+              >
+                <p className="fontIR">
+                  {option.name ? option.name : option.content}
+                </p>
               </MenuItem>
             );
           })}

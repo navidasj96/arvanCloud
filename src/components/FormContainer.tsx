@@ -10,9 +10,9 @@ export default function FormContainer({ title, children, onSubmit }: Props) {
   return (
     <form
       onSubmit={onSubmit}
-      className="w-96 p-6 space-y-6 bg-white shadow-md rounded-md"
+      className="ltr w-full"
     >
-      <h3 className="text-center fontIR font-semibold ">{title}</h3>
+      <h3 className="text-center fontIR font-semibold pb-10 ">{title}</h3>
       {children}
     </form>
   );

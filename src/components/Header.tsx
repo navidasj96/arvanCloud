@@ -39,7 +39,7 @@ const leftOptionsSmall: {
     title_fa: "Code",
     Icon: "Code",
     abbrev: "Code",
-    route: "/ecc",
+    route: "/",
   },
 ];
 const rightOptionsSmall: {
@@ -61,7 +61,7 @@ const rightOptionsSmall: {
     title_fa: "Menu",
     Icon: "Menu",
     abbrev: "Menu",
-    route: "/Menu/domains",
+    route: "/",
   },
 ];
 
@@ -84,28 +84,28 @@ const LeftOptionsBig: {
     title_fa: "Wallet",
     Icon: "Wallet",
     abbrev: "Wallet",
-    route: "Wallet",
+    route: "/",
   },
   {
     title: "Calculator",
     title_fa: "Calculator",
     Icon: "Calculator",
     abbrev: "Calculator",
-    route: "Calculator",
+    route: "/",
   },
   {
     title: "Bell",
     title_fa: "Bell",
     Icon: "Bell",
     abbrev: "Bell",
-    route: "Bell",
+    route: "/",
   },
   {
     title: "Code",
     title_fa: "Code",
     Icon: "Code",
     abbrev: "Code",
-    route: "Code",
+    route: "/",
   },
   {
     title: "Search",

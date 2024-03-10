@@ -19,14 +19,14 @@ const Settingoptions: {
     title_fa: "آموزش",
     Icon: "Book",
     abbrev: "CDN",
-    route: "/cdn/domains",
+    route: "/",
   },
   {
     title: "support",
     title_fa: "بشتیبانی",
     Icon: "HeadPhone",
     abbrev: "HeadPhone",
-    route: "/ecc",
+    route: "",
   },
 ];
 export default function SettingOptions() {

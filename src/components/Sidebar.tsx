@@ -7,71 +7,74 @@ import {
 } from "../UistateManagment/UiSlice";
 import { useUiRedux } from "../utils/getUiState";
 import { useRouter } from "../routes/sections/hooks/use-router";
-import { Link } from "react-router-dom";
-const MainMenuoptions: {
-  title: string;
-  title_fa: string;
-  Icon: any;
-  abbrev: string;
-  route: string;
-}[] = [
-  {
-    title: "Home",
-    title_fa: "صفحه اصلی",
-    Icon: "Home",
-    abbrev: "Home",
-    route: "/dashboard",
-  },
-  {
-    title: "CDN",
-    title_fa: "شبکه توزیع محتوا",
-    Icon: "CDN",
-    abbrev: "CDN",
-    route: "/dashboard/cdn",
-  },
-  {
-    title: "Cloud Server",
-    title_fa: " سرور ابری",
-    Icon: "Cloud_Server",
-    abbrev: "Server",
-    route: "/ecc",
-  },
-  {
-    title: "Objective Storage",
-    title_fa: " فضای ابری",
-    Icon: "Objective_Storage",
-    abbrev: "Storage",
-    route: "storage",
-  },
-  {
-    title: "Cloud Container",
-    title_fa: "کانتینر ابری",
-    Icon: "Cloud_Container",
-    abbrev: "Container",
-    route: "paas",
-  },
-  {
-    title: "Video Platform ",
-    title_fa: "بلتفرم ویدیو",
-    Icon: "Video_Platform",
-    abbrev: "Video",
-    route: "video",
-  },
-  {
-    title: "Managed Database",
-    title_fa: "دیتابیس ابری",
-    Icon: "Managed_Database",
-    abbrev: "Database",
-    route: "dbaas",
-  },
-];
+import { useTranslate } from "../locales/useLocales";
 
 export default function SidebarOptions() {
+  const { t } = useTranslate();
+  const MainMenuoptions: {
+    title: string;
+    title_fa: string;
+    Icon: any;
+    abbrev: string;
+    route: string;
+  }[] = [
+    {
+      title: "Home",
+      title_fa: "صفحه اصلی",
+      Icon: "Home",
+      abbrev: "Home",
+      route: "/",
+    },
+    {
+      title: "CDN",
+      title_fa: "شبکه توزیع محتوا",
+      Icon: "CDN",
+      abbrev: "CDN",
+      route: "/add-item",
+    },
+    {
+      title: "Cloud Server",
+      title_fa: " سرور ابری",
+      Icon: "Cloud_Server",
+      abbrev: "Server",
+      route: "/",
+    },
+    {
+      title: "Objective Storage",
+      title_fa: " فضای ابری",
+      Icon: "Objective_Storage",
+      abbrev: "Storage",
+      route: "/",
+    },
+    {
+      title: "Cloud Container",
+      title_fa: "کانتینر ابری",
+      Icon: "Cloud_Container",
+      abbrev: "Container",
+      route: "/",
+    },
+    {
+      title: "Video Platform ",
+      title_fa: "بلتفرم ویدیو",
+      Icon: "Video_Platform",
+      abbrev: "Video",
+      route: "/",
+    },
+    {
+      title: "Managed Database",
+      title_fa: "دیتابیس ابری",
+      Icon: "Managed_Database",
+      abbrev: "Database",
+      route: "/",
+    },
+  ];
   const { ActiveSession, HamburgerMenuIsOpen } = useUiRedux();
   const router = useRouter();
   const dispatch = useDispatch();
   const OnclickHandler = (item: { title: string; route: string }) => {
-    // router.push(item.route);
+    router.push(item.route);
+    // console.log("item path is", item.route);
+
     dispatch(setActiveSession(item.title));
   };
   return (

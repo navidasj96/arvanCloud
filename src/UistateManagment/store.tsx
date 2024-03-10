@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import uiSlice from "./UiSlice";
+import FormSlice from "./FormSlice";
 
 const store = configureStore({
   reducer: {
     uiRedux: uiSlice,
+    FormRedux: FormSlice,
   },
 });
 

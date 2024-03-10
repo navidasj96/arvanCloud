@@ -41,7 +41,7 @@ function DashboardLayout({ children }: Props) {
     // if (theme) dispatch(setInitialTheme(theme.Direction));
   }, []);
   const dispatch = useDispatch();
-  const { Direction } = useUiRedux();
+  const { Direction, ActiveSession } = useUiRedux();
   const { screenWidth } = UseGetWindowsWidth();
   const [containerWidth, setContainerWidth] = useState<number>();
   const divRef = useRef<HTMLDivElement>(null);
@@ -63,13 +63,14 @@ function DashboardLayout({ children }: Props) {
     if (screenWidth < 960) {
       setContainerWidth(100);
     }
+    // console.log("divRef.current?.clientWidth", divRef.current?.clientWidth);
 
-    console.log("containerWidth", containerWidth);
-  }, [screenWidth, divRef.current?.clientWidth, containerWidth]);
+    // console.log("containerWidth", containerWidth);
+  }, [screenWidth, divRef.current?.clientWidth, containerWidth, ActiveSession]);
   // const { data } = useQuery({ queryFn: fetchData, queryKey: ["test-data"] });
-  const ClickHandler = () => {
-    setContainerWidth(divRef.current?.clientWidth);
-  };
+  // const ClickHandler = () => {
+  //   setContainerWidth(divRef.current?.clientWidth);
+  // };
   return (
     <div
       className={`flex min-h-screen max-w-[100vw] bg-[#f5f7fa] ${
@@ -78,7 +79,6 @@ function DashboardLayout({ children }: Props) {
     >
       <div
         ref={divRef}
-        onClick={ClickHandler}
         className={`flex w-auto z-10 fixed top-0 h-[100dvh]  ${
           Direction === "rtl" && "translate-x-full"
         }  ${

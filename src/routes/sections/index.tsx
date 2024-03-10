@@ -16,10 +16,7 @@ export default function Router() {
     // ----------------------------------------------------------------------
 
     // SET INDEX PAGE WITH HOME PAGE
-    {
-      path: "/",
-      element: <App />,
-    },
+
     ...DashboardRoutes,
     ...LoginRoutes,
     // // Auth routes

@@ -17,7 +17,7 @@ export default function ImageInput({ id, onChange, children, ...rest }: Props) {
         accept="image/*"
         {...rest}
       />
-      <div className="w-20 h-20 rounded flex items-center justify-center border border-gray-700 cursor-pointer">
+      <div className="w-10 h-10 rounded flex items-center justify-center  border-gray-700 cursor-pointer">
         {children}
       </div>
     </label>

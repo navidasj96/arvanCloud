@@ -9,7 +9,7 @@ const CDN = lazy(() => import("../../pages/dashboard/CDN"));
 const CloudeService = lazy(() => import("../../pages/dashboard/CloudeServer"));
 export const DashboardRoutes = [
   {
-    path: "/dashboard",
+    path: "/",
     element: (
       <DashboardLayout>
         <Suspense fallback={<div>please wait</div>}>
@@ -18,7 +18,7 @@ export const DashboardRoutes = [
       </DashboardLayout>
     ),
     children: [
-      { path: "cdn", element: <CDN /> },
+      { path: "add-item", element: <CDN /> },
       { path: "cloud-service", element: <CloudeService /> },
     ],
   },

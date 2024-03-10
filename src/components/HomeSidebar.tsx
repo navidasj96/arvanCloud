@@ -3,6 +3,7 @@ import IconComponent from "./IconComponent";
 import { useUiRedux } from "../utils/getUiState";
 import { useDispatch } from "react-redux";
 import { setActiveSession } from "../UistateManagment/UiSlice";
+import { useRouter } from "../routes/sections/hooks/use-router";
 const MainMenuoptions: {
   title: string;
   title_fa: string;
@@ -22,42 +23,42 @@ const MainMenuoptions: {
     title_fa: "شبکه توزیع محتوا",
     Icon: "CDN",
     abbrev: "CDN",
-    route: "/cdn/domains",
+    route: "add-item",
   },
   {
     title: "Cloud Server",
     title_fa: " سرور ابری",
     Icon: "Cloud_Server",
     abbrev: "Server",
-    route: "/ecc",
+    route: "/",
   },
   {
     title: "Objective Storage",
     title_fa: " فضای ابری",
     Icon: "Objective_Storage",
     abbrev: "Storage",
-    route: "storage",
+    route: "/",
   },
   {
     title: "Cloud Container",
     title_fa: "کانتینر ابری",
     Icon: "Cloud_Container",
     abbrev: "Container",
-    route: "paas",
+    route: "/",
   },
   {
     title: "Video Platform ",
     title_fa: "بلتفرم ویدیو",
     Icon: "Video_Platform",
     abbrev: "Video",
-    route: "video",
+    route: "/",
   },
   {
     title: "Managed Database",
     title_fa: "دیتابیس ابری",
     Icon: "Managed_Database",
     abbrev: "Database",
-    route: "dbaas",
+    route: "/",
   },
 ];
 
@@ -80,21 +81,23 @@ const SettingMenuoptions: {
     title_fa: "آموزش",
     Icon: "Book",
     abbrev: "CDN",
-    route: "/cdn/domains",
+    route: "/",
   },
   {
     title: "Cloud Server",
     title_fa: " پشتیبانی",
     Icon: "HeadPhone",
     abbrev: "Server",
-    route: "/ecc",
+    route: "/",
   },
 ];
 export default function HomeSidebar() {
   const { ActiveSession, theme, lang } = useUiRedux();
+  const router = useRouter();
   const dispatch = useDispatch();
-  const OnclickHandler = (title: string) => {
-    dispatch(setActiveSession(title));
+  const OnclickHandler = (item: { title: string; route: string }) => {
+    dispatch(setActiveSession(item.title));
+    router.push(item.route);
   };
   return (
     <div
@@ -111,7 +114,7 @@ export default function HomeSidebar() {
           {MainMenuoptions.map((item, index) => {
             return (
               <div
-                onClick={() => OnclickHandler(item.title)}
+                onClick={() => OnclickHandler(item)}
                 key={index}
                 className="relative flex flex-row gap-[.5rem] items-center cursor-pointer box-border"
               >
@@ -154,7 +157,7 @@ export default function HomeSidebar() {
           {SettingMenuoptions.map((item, index) => {
             return (
               <div
-                onClick={() => OnclickHandler(item.title)}
+                onClick={() => OnclickHandler(item)}
                 key={index}
                 className="relative flex flex-row gap-[.5rem] items-center cursor-pointer box-border"
               >

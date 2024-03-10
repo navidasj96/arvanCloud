@@ -42,6 +42,9 @@ export const useUiRedux = () => {
   const addItemState = useSelector<RootState, any>(
     (state) => state.uiRedux.addItemState
   );
+  const serviceTypesItem = useSelector<RootState, any>(
+    (state) => state.uiRedux.serviceTypesItem
+  );
   return {
     ActiveSession,
     HamburgerMenuIsOpen,
@@ -56,6 +59,7 @@ export const useUiRedux = () => {
     theme,
     lang,
     addItemState,
+    serviceTypesItem,
   };
 };
 

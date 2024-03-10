@@ -14,6 +14,9 @@ export interface UiState {
   theme: "day" | "night";
   lang: "en" | "fa";
   addItemState: {};
+  serviceTypesItem: [];
+  itemImages: any;
+  Printers: any;
 }
 
 var initialState: UiState = {
@@ -30,6 +33,9 @@ var initialState: UiState = {
   theme: "day",
   lang: "fa",
   addItemState: {},
+  serviceTypesItem: [],
+  itemImages: [],
+  Printers: [],
 };
 
 const UiSlice = createSlice({
@@ -102,6 +108,15 @@ const UiSlice = createSlice({
     setAddItemState: (state, action: PayloadAction<any>) => {
       state.addItemState = { ...state.addItemState, ...action.payload };
     },
+    setServiceTypes: (state, action: PayloadAction<any>) => {
+      state.serviceTypesItem = action.payload;
+    },
+    setItemImages: (state, action: PayloadAction<any>) => {
+      state.itemImages = [...state.itemImages, action.payload];
+    },
+    setPrinters: (state, action: PayloadAction<any>) => {
+      state.Printers = [...state.Printers, ...action.payload];
+    },
   },
 });
 
@@ -128,5 +143,7 @@ export const {
   setTheme,
   setLang,
   setAddItemState,
+  setServiceTypes,
+  setItemImages,
 } = UiSlice.actions;
 export default UiSlice.reducer;
